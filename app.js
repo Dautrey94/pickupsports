@@ -1,9 +1,10 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
+const express = require('express');
+const path = require('path');
+const favicon = require('serve-favicon');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const expressLayouts = require('express-ejs-layouts');
 
 const mongoose = require('mongoose');
 const session = require('express-session')
@@ -19,42 +20,55 @@ const bcrypt = require ('bcrypt')
 
 mongoose.connect('mongodb://localhost:27017/pickup-development')
 
-var app = express();
+const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+app.set('layout', 'layouts/main-layout');
+app.use(expressLayouts);
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use( (req, res, next) => {
+  if (typeof(req.user) !== "undefined"){
+    res.locals.userSignedIn = true;
+  } else {
+    res.locals.userSignedIn = false;
+  }
+  next();
+});
+
 app.use(session({
   secret: 'pickupdev',
-  resave: false,
+  resave: true,
   saveUninitialized: true,
   store: new MongoStore( {mongooseConnection: mongoose.connection})
   })
 );
 
-app.use(flash());
-
 //Helps keep amount of data in session as small as we need
 passport.serializeUser((user, cb) => {
   cb(null, user._id);
-})
+});
 //Helps keep amount of data in session as small as we need
-passport.deserializeUser((is, cb) => {
+passport.deserializeUser((id, cb) => {
   User.findOne({"_id": id}, (err,user) => {
+    if (err) {return cb(err);}
     cb(null,user);
   });
 });
+//used to manage flash errors if username/password is incorrect
+app.use(flash());
 //defines whic strategy we are going to use, and its config
-passport.use(new LocalStrategy((username, password, next) => {
+passport.use(new LocalStrategy({
+  passReqToCallback: true},
+  (req,username, password, next) => {
   User.findOne({username}, (err,user) => {
     if(err) {
       return next (err);
@@ -73,8 +87,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 const authRoutes = require('./routes/auth-routes');
-var index = require('./routes/index');
-var users = require('./routes/users');
+const index = require('./routes/index');
+const users = require('./routes/users');
 
 app.use('/', index);
 app.use('/users', users);

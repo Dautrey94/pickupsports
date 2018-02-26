@@ -4,6 +4,7 @@ const User = require('../models/user');
 const bcrypt = require('bcrypt');
 const bcryptSalt = 10;
 const passport = require ('passport');
+const ensureLogin = require('connect-ensure-login');
 
 authRoutes.get('/signup', (req,res,next) => {
     res.render('auth/signup');
@@ -29,7 +30,7 @@ authRoutes.post('/signup', (req,res,next) => {
 
         const newUser = new User({
             username,
-            password: hashpass
+            password: hashPass
         });
 
         newUser.save((err) => {
@@ -43,7 +44,7 @@ authRoutes.post('/signup', (req,res,next) => {
 });
 //GET loads the view we will use
 authRoutes.get('/login', (req,res,next) => {
-    res.render('auth/login');
+    res.render('auth/login', {"message": req.flash("error") });
 });
 //POST will contain the passport functionality
 authRoutes.post('/login', passport.authenticate("local", {
@@ -52,5 +53,14 @@ authRoutes.post('/login', passport.authenticate("local", {
     failureFlash: true,
     passReqToCallback: true
 }));
+//If we try to access page without being logged in, we should be redirected to login
+authRoutes.get('/private-page', ensureLogin.ensureLoggedIn(), (req,res) => {
+    res.render("private", {user: req.user});
+});
+
+authRoutes.get("/logout", (req, res) => {
+    req.logout();
+    res.redirect('/login');
+});
 
 module.exports = authRoutes;
