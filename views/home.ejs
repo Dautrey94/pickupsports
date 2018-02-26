@@ -1,0 +1,11 @@
+Home page
+<% if (user) { %>
+        <a href="/newgame"><button>Create Game</button></a>
+<% } %>
+<%# gameResults is defined in the get homepage route %>
+<% gameResults.forEach((oneGame) => { %>
+    <%# oneGame is a placeholder %>
+    <%# sport is part of schema %>
+    <strong><%= oneGame.sport%></strong>
+    <strong><%= oneGame.address%></strong>
+<% }) %>

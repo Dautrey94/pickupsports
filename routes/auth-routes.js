@@ -1,7 +1,7 @@
 const express = require('express');
 const authRoutes = express.Router();
 const User = require('../models/user');
-// const Games = require('../models/games');
+const Games = require('../models/games');
 const bcrypt = require('bcrypt');
 const bcryptSalt = 10;
 const passport = require ('passport');
@@ -49,36 +49,24 @@ authRoutes.get('/login', (req,res,next) => {
 });
 //POST will contain the passport functionality
 authRoutes.post('/login', passport.authenticate("local", {
-    successRedirect: "/",
+    successRedirect: "/homepage",
     failureRedirect: '/login',
     failureFlash: true,
     passReqToCallback: true
 }));
-//If we try to access page without being logged in, we should be redirected to login
-authRoutes.get('/newgame', ensureLogin.ensureLoggedIn(), (req,res) => {
-    // user is the variable i'm using in my ejs file
-    // req.user is currently logged in user
-    res.render("games/newgame", {user: req.user});
+
+authRoutes.get('/homepage', ensureLogin.ensureLoggedIn(), (req, res, next) => {
+    // this Games comes from where we defined it earlier (requiring the Game Model)
+    Games
+    .find({})
+
+    // save the results as "gameResults"
+    .exec((err,gameResults) => {
+        // when redering "home", pass along the data of gameResults
+        res.render('home', {user: req.user, gameResults});
+    });
 });
 
-authRoutes.post('/newgame', (req,res,next) => {
- const newGame = new Games({
-     sport : req.body.sport,
-     address : req.body.address,
-     dateAndTime : req.body.date,
-     maxPlayers : req.body.maxPlayers,
-     currentPlayers : req.body.currentPlayers,
-    //  owner: req.user._id
- })
- 
-
-//  newGame.save((err) => {
-//      if(err){
-//         res.render("games", {user: req.user});
-//      }
-//      res.redirect('/');
-//     }) 
-});
 
 authRoutes.get("/logout", (req, res) => {
     req.logout();
