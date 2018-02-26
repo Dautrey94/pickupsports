@@ -6,22 +6,18 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 const mongoose = require('mongoose');
+const session = require('express-session')
+const passport = require ('passport');
 
+const MongoStore  = require ('connect-mongo')(session);
 const flash = require('connect-flash');
 
-const passport = ('passport');
-const session = require('express-session')
-//const MongoStore = require('connect-mongo');
 
 const LocalStrategy = require('passport-local').Strategy;
 const User = require('./models/user');
 const bcrypt = require ('bcrypt')
 
 mongoose.connect('mongodb://localhost:27017/pickup-development')
-
-// var index = require('./routes/index');
-// var users = require('./routes/users');
-// const authRoutes = require('./routes/auth-routes')
 
 var app = express();
 
@@ -41,22 +37,50 @@ app.use(session({
   secret: 'pickupdev',
   resave: false,
   saveUninitialized: true,
-  //store: new MongoStore( {mongooseConnection: mongoose.connection})
-}))
+  store: new MongoStore( {mongooseConnection: mongoose.connection})
+  })
+);
 
 app.use(flash());
+
+//Helps keep amount of data in session as small as we need
+passport.serializeUser((user, cb) => {
+  cb(null, user._id);
+})
+//Helps keep amount of data in session as small as we need
+passport.deserializeUser((is, cb) => {
+  User.findOne({"_id": id}, (err,user) => {
+    cb(null,user);
+  });
+});
+//defines whic strategy we are going to use, and its config
+passport.use(new LocalStrategy((username, password, next) => {
+  User.findOne({username}, (err,user) => {
+    if(err) {
+      return next (err);
+    }
+    if (!user) {
+      return next (null, false, {message: "Incorrect username"});
+    }
+    if (!bcrypt.compareSync(password, user.password)) {
+      return next(null, false, {message: "Incorrect password"});
+    }
+    return next(null,user);
+  });
+}));
 
 app.use(passport.initialize());
 app.use(passport.session());
 
+const authRoutes = require('./routes/auth-routes');
+var index = require('./routes/index');
+var users = require('./routes/users');
 
 app.use('/', index);
 app.use('/users', users);
 app.use('/', authRoutes);
 
-const authRoutes = require('./routes/auth-routes');
-var index = require('./routes/index');
-var users = require('./routes/users');
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
