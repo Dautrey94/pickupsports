@@ -55,7 +55,7 @@ authRoutes.post('/login', passport.authenticate("local", {
     passReqToCallback: true
 }));
 
-authRoutes.get('/homepage', ensureLogin.ensureLoggedIn(), (req, res, next) => {
+authRoutes.get('/homepage', (req, res, next) => {
     // this Games comes from where we defined it earlier (requiring the Game Model)
     Games
     .find({})
@@ -64,13 +64,14 @@ authRoutes.get('/homepage', ensureLogin.ensureLoggedIn(), (req, res, next) => {
     .exec((err,gameResults) => {
         // when redering "home", pass along the data of gameResults
         res.render('home', {user: req.user, gameResults});
+        // console.log("gameResults: ====", gameResults)
     });
 });
 
 
 authRoutes.get("/logout", (req, res) => {
     req.logout();
-    res.redirect('/login');
+    res.redirect('/homepage');
 });
 
 module.exports = authRoutes;

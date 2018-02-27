@@ -89,12 +89,12 @@ app.use(passport.session());
 const authRoutes = require('./routes/auth-routes');
 const index = require('./routes/index');
 const users = require('./routes/users');
-const games = require('./routes/newgame-route')
-
-app.use('/', index);
+const newGamesRoute = require('./routes/newgame-route');
+app.use('/', newGamesRoute);
+// app.use('/', index);
 app.use('/users', users);
 app.use('/', authRoutes);
-app.use('/', games);
+
 
 
 
