@@ -1,0 +1,36 @@
+h1 {
+    text-align: right;
+    margin-right: 120px;
+}
+
+.auth {
+    float: right;
+    padding-right: 25px;
+    margin-right: 80px;
+}
+
+/* #leftHalf {
+    background-image: url("../images/soccer.jpg");
+    width: 50%;
+    position: absolute;
+    left: 0px;
+   margin-top: 100px;
+    height: 100%;
+    background-size: cover;
+ } */
+
+
+#login-btn:hover {
+    text-decoration: none;
+}
+
+#login-btn a {
+    color: #fff;
+}
+
+#signup-btn a {
+    color: #fff;
+}
+
+
+

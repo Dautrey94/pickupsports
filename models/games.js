@@ -4,9 +4,13 @@ const Schema = mongoose.Schema;
 const gameSchema = new Schema ({
     sport:          String,
     address:        String,
-    dateAndTime:    Date,
+    date:           Date,
+    time:           Number,
     maxPlayers:     Number,
-    currentPlayers: Number,
+    currentPlayers: {
+        type: Number,
+        default: 1
+    },
     owner:          { type: Schema.Types.ObjectId,
                       required: true}
     });

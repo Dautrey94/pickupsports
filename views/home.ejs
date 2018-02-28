@@ -1,10 +1,11 @@
-Home page
+<link rel="stylesheet" href="/stylesheets/home.css">
+<div id="leftHalf" class="home-image"></div>
+<h1>PlayBall</h1>
 <% if (user) { %>
         <a href="/newgame"><button>Create Game</button></a>
 
         <a href="/logout">click here to logout</a>
-        
-        
+
             <%# gameResults is defined in the get homepage route %>
             <% gameResults.forEach((oneGame) => { %>
                 <%# oneGame is a placeholder %>
@@ -20,24 +21,44 @@ Home page
                 Current Players: <strong><%= oneGame.currentPlayers%></strong>
                 <br>
                 Max Players: <strong><%= oneGame.maxPlayers%></strong>
+                
 
         <% if(oneGame.owner !== undefined){ %>
                 <% if(user._id.equals(oneGame.owner)){ %>
                     <button><a href="/games/<%=oneGame._id%>/edit">Edit Game</a></button>
                     <form action="/games/<%=oneGame._id%>/delete" method="post">
-                        <button> Delete </button>
+                        <button type="submit"> Delete </button>
                     </form>
                     <br>
                     
                 <% } %>
+        
+    <% if((user._id.equals(oneGame.owner))=== false){ %>
+        <% if(oneGame.maxPlayers !== oneGame.currentPlayers){ %>
+
+                <!-- attempting to disable join button -->
+                <div class= "joinBtn">
+                    <form action="/games/<%=oneGame._id%>/add" method="post">
+                      <button type="submit"> Join Game </button>
+                    </form>
+                </div>
+                        <% } else {%>
+                            
+                    <% } %>
+        
             <% }  %>
             <% }) %>
         
 
 <% } else {%>
-    <a href="/login">Click here to login</a>
-      <a href="/signup">click here to signup</a>
+    <div class="auth">
+          <button id="login-btn"  class="btn btn-primary btn-lg"><a href="/login">Login</a></button>  
+        <button id="signup-btn" class="btn btn-success btn-lg"><a href="/signup">Signup</a></button>    
+    </div>
+   
 <% } %>
+
+
 
 
 

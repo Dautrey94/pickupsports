@@ -26,7 +26,8 @@ newGameRoutes.post('/newgame', (req,res,next) => {
         dateAndTime : req.body.date,
         maxPlayers : req.body.maxPlayers,
         currentPlayers : req.body.currentPlayers,
-        owner: req.user._id
+        owner: req.user._id,
+        joinGame: []
     })
 // save the new game into the DB
      newGame.save((err) => {
@@ -36,10 +37,6 @@ newGameRoutes.post('/newgame', (req,res,next) => {
      res.redirect('/homepage');
     }) 
 });
-
-newGameRoutes.get('', (req, res, next) => {
-
-})
 
 newGameRoutes.get('/games/:id/edit', ensureLogin.ensureLoggedIn(),(req,res,next) => {
     // console.log('poom');
@@ -71,6 +68,48 @@ newGameRoutes.post('/games/:id', (req,res,next) => {
     });
 });
 
+//Join Game
+;
+
+newGameRoutes.post('/games/:id/add', ensureLogin.ensureLoggedIn(),(req,res,next) => {
+    console.log('poom');
+    const gameId = req.params.id;
+
+    console.log("game id: ", gameId)
+
+    Games.findById(gameId, (err, theGame) => {
+        console.log('theGame')
+        if (err) {
+            console.log("err is:", err)
+            return next(err)
+        }
+        console.log("theGame.currentPlayers ======", theGame.currentPlayers)
+        console.log("theGame.maxPlayers", theGame.maxPlayers)
+        if(theGame.maxPlayers > theGame.currentPlayers){
+            theGame.currentPlayers+=1;
+        }
+        theGame.save((err)=>{
+            if (err) {
+                console.log("err is:", err)
+                return next(err)
+            } 
+        })
+        res.redirect('/homepage')
+    })
+});
+// newGameRoutes.post('/games/:id/',(req,res,next) => {
+//     console.log('yoo');
+//     const addPlayer = {
+//         currentPlayers: req.body.currentPlayers
+//     }
+//     Games.findByIdAndUpdate (req.params.id, addPlayer, (err) => {
+//         if (err) {
+//             return next (err)
+//         }
+//         res.redirect('/homepage');
+//     });
+// });
+
 // delete
 newGameRoutes.post('/games/:id/delete', (req, res, next) => {
     const gameId = req.params.id;
@@ -85,6 +124,15 @@ newGameRoutes.post('/games/:id/delete', (req, res, next) => {
 })
 
 
+
+// attempt to disbale join button
+
+// function disableJoin() {
+//    document.getElementById("joinBtn").disabled = true;
+// }
+// if (currentPlayers === maxPlayers){
+//     return disableJoin()
+// }
 
 
 module.exports = newGameRoutes;
