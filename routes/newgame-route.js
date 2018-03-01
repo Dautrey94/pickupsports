@@ -1,5 +1,6 @@
 const express = require('express');
 const Games = require('../models/games');
+const User = require('../models/user');
 const newGameRoutes = express.Router();
 const ensureLogin = require('connect-ensure-login');
 
@@ -72,31 +73,79 @@ newGameRoutes.post('/games/:id', (req,res,next) => {
 ;
 
 newGameRoutes.post('/games/:id/add', ensureLogin.ensureLoggedIn(),(req,res,next) => {
-    console.log('poom');
     const gameId = req.params.id;
+// find a user by his id 
+// (req.user is available because we are currently logged in)
+//     |
+//      ------------
+//                  | (and theUser is just a placeholder, can be any name, we just ahve to be cosinstent)
+//                  |       |
+//                  |       ------------
+//                  |                  | 
+    User.findById(req.user._id, (err, theUser) => {
+        // we are changing the status of our user 
+        //from not in a game (set to false) to in the game (set to true)
+        theUser.inTheGame = true;
+        // saving user's chaniges into DB
+        theUser.save((err) => {
+            if (err) {
+                console.log("err is:", err)
+                return next(err)
+            }
+            // finding the game by id
+            // theGame is just a placeholder, can be anything, just stay consistent
+            Games.findById(gameId, (err, theGame) => {
+                // console.log('theGame')
+                if (err) {
+                    console.log("err is:", err)
+                    return next(err)
+                }
+                // check if there's any left places in the game for user's to join
+                if(theGame.maxPlayers > theGame.currentPlayers){
+                    // if thats true, add a player
+                    theGame.currentPlayers+=1;
+                }
+                // save the changes for that game
+                theGame.save((err)=>{
+                    if (err) {
+                        console.log("err is:", err)
+                        return next(err)
+                    } 
+                })
+                // go to a homepage
+                res.redirect('/homepage')
+            })
+     })
+ })
+});
 
-    console.log("game id: ", gameId)
-
-    Games.findById(gameId, (err, theGame) => {
-        console.log('theGame')
-        if (err) {
-            console.log("err is:", err)
-            return next(err)
-        }
-        console.log("theGame.currentPlayers ======", theGame.currentPlayers)
-        console.log("theGame.maxPlayers", theGame.maxPlayers)
-        if(theGame.maxPlayers > theGame.currentPlayers){
-            theGame.currentPlayers+=1;
-        }
-        theGame.save((err)=>{
+newGameRoutes.post('/games/:id/leave', (req, res, next) =>{
+    const gameId = req.params.id;
+    User.findById(req.user._id, (err, theUser) =>{
+        theUser.inTheGame = false;
+        theUser.save((err) => {
             if (err) {
                 console.log("err is:", err)
                 return next(err)
             } 
+
+            Games.findById(gameId, (err, theGame) => {
+                theGame.currentPlayers-=1;
+                theGame.save((err)=>{
+                    if (err) {
+                        console.log("err is:", err)
+                        return next(err)
+                    } 
+                })
+            })
+            res.redirect('/homepage')
         })
-        res.redirect('/homepage')
     })
-});
+
+})
+
+
+
 // newGameRoutes.post('/games/:id/',(req,res,next) => {
 //     console.log('yoo');
 //     const addPlayer = {

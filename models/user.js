@@ -5,6 +5,7 @@ const userSchema = new Schema ({
     username:       String,
     email:      String,
     password:   String, 
+    inTheGame: false
 }, {
     timestamps: {createdAt: "created_at", updatedAt: "updated_at"}
 });
