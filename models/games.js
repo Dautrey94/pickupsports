@@ -7,10 +7,7 @@ const gameSchema = new Schema ({
     date:           Date,
     time:           Number,
     maxPlayers:     Number,
-    currentPlayers: {
-        type: Number,
-        default: 1
-    },
+    currentPlayers: Number,
     owner:          { type: Schema.Types.ObjectId,
                       required: true}
     });

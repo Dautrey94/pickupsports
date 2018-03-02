@@ -28,7 +28,6 @@ newGameRoutes.post('/newgame', (req,res,next) => {
         maxPlayers : req.body.maxPlayers,
         currentPlayers : req.body.currentPlayers,
         owner: req.user._id,
-        joinGame: []
     })
 // save the new game into the DB
      newGame.save((err) => {

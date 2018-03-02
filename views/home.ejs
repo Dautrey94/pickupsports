@@ -1,9 +1,7 @@
 <link rel="stylesheet" href="/stylesheets/home.css">
 
-
 <% if (user) { %>
         
-
     
       <nav id="nav-menu-container">
         <ul class="nav-menu">           
@@ -11,9 +9,8 @@
           <li><a href="/logout"><button class= "btn btn-danger">Logout</a></li>
         </ul>
       </nav>
-    </div>
-   
 
+   
         <%# gameResults is defined in the get homepage route %>
         <% gameResults.forEach((oneGame) => { %>
             <%# oneGame is a placeholder %>
@@ -21,18 +18,25 @@
             
     <section id="services">
             <div class="container">
-              <!-- <div class="section-header">
-                <h2>Services</h2>
-                <p>Sed tamen tempor magna labore dolore dolor sint tempor duis magna elit veniam aliqua esse amet veniam enim export quid quid veniam aliqua eram noster malis nulla duis fugiat culpa esse aute nulla ipsum velit export irure minim illum fore</p>
-              </div> -->
+              <div class="section-header">
+              </div> 
       
               <div class="row">
       
-                <div class="col-lg-4">
-                  <div class="box wow fadeInLeft">
+                <div>
+                  <div class="wow fadeInLeft">
                     <div class="icon"><i class="fa fa-bar-chart"></i></div>
+                    <ul class="list-group">
+                      <%  console.log("ONEGAME:", oneGame) %>
+                        <p><%=oneGame.owner%> organized this event: </p>
+                        <li class="list-group-item"> Sport:<strong><%= oneGame.sport %></strong></li>
+                        <li class="list-group-item">Address: <strong><%= oneGame.address%></strong></li>
+                        <li class="list-group-item">Date and Time<strong><%= oneGame.dateAndTime%></strong></li>
+                        <li class="list-group-item">Current Players: <strong><%= oneGame.currentPlayers%></strong></li>
+                        <li class="list-group-item">Max Players: <strong><%= oneGame.maxPlayers%></strong></li>
+                      </ul>
                     
-            <p><%=oneGame.owner%> organized this event: </p>
+            <!-- <p><%=oneGame.owner%> organized this event: </p>
             Sport:<strong><%= oneGame.sport%></strong>
             <br>
             Address: <strong><%= oneGame.address%></strong>
@@ -41,13 +45,13 @@
             <br>
             Current Players: <strong><%= oneGame.currentPlayers%></strong>
             <br>
-            Max Players: <strong><%= oneGame.maxPlayers%></strong>
+            Max Players: <strong><%= oneGame.maxPlayers%></strong> -->
                   </div>
                 </div>
               </div>
       
-            </div>
-          </section><!-- #services -->
+            <!-- </div> -->
+          </section>
             <!-- <p>===========================================</p>
             <p><%=oneGame.owner%> organized this event: </p>
             Sport:<strong><%= oneGame.sport%></strong>
@@ -60,7 +64,6 @@
             <br>
             Max Players: <strong><%= oneGame.maxPlayers%></strong> -->
             
-
     <% if(oneGame.owner !== undefined){ %>
             <% if(user._id.equals(oneGame.owner)){ %>
                 <button><a href="/games/<%=oneGame._id%>/edit">Edit Game</a></button>
@@ -73,13 +76,14 @@
     
                 <% if((user._id.equals(oneGame.owner))=== false){ %>
                     <% if(oneGame.maxPlayers !== oneGame.currentPlayers){ %>
-                        <% if(user.inTheGame === false ) { %>
+                      <% console.log("USER IN THE GAME ?: ", user) %>
+                        <% if(!user.inTheGame) { %>
                             <div class= "joinBtn"></div>
                                 <form action="/games/<%=oneGame._id%>/add" method="post">
                                 <button type="submit"> Join Game </button>
                                 </form>
                             </div>
-                            <% }  else {%>
+                            <% }  else { %>
                                 <div class= "joinBtn">
                                         <form action="/games/<%=oneGame._id%>/leave" method="post">
                                         <button type="submit"> Leave the Game </button>
@@ -88,6 +92,7 @@
                             <% } %>
                     <% }%>     
             <% }  %>
+
         <% } %>
         <% }) %>
 <% } else {%>
@@ -100,6 +105,3 @@
 
 
 
-
-
-    

@@ -11,6 +11,7 @@ const session = require('express-session')
 const passport = require ('passport');
 
 const MongoStore  = require ('connect-mongo')(session);
+                  require("dotenv").config();
 const flash = require('connect-flash');
 
 
@@ -18,7 +19,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const User = require('./models/user');
 const bcrypt = require ('bcrypt')
 
-mongoose.connect('mongodb://localhost:27017/pickup-development')
+mongoose.connect(process.env.MONGO_URI);
 
 const app = express();
 

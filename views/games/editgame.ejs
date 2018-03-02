@@ -1,13 +1,32 @@
-<form method="post" action="/games/<%=theGame._id%>">
-    <label for="sport-input"> Sport: </label>
-    <input  id="sport-input" type="text" name="sport" value="<%=theGame.sport%>">
-    <br>
-  
-    <label for="address-input"> Address: </label>
-    <input  id="address-input" type="text" name="address" value="<%=theGame.address%>" >
-    <br>
-    <label for="maxPlayers">Max Players</label>
-    <input type="number" name="maxPlayers" value="<%=theGame.maxPlayers%>" >
-    <br>
-    <button type="submit"> Update Game </button>
-  </form>
+
+    <!-- <form method="post" action="/games/<%=theGame._id%>">
+      <label for="sport-input"> Sport: </label>
+      <input  id="sport-input" type="text" name="sport" value="<%=theGame.sport%>">
+      <br>
+    
+      <label for="address-input"> Address: </label>
+      <input  id="address-input" type="text" name="address" value="<%=theGame.address%>" >
+      <br>
+      <label for="maxPlayers">Max Players</label>
+      <input type="number" name="maxPlayers" value="<%=theGame.maxPlayers%>" >
+      <br>
+      <button type="submit"> Update Game </button>
+    </form> -->
+
+    <form style="width: 40%; margin: 50px auto"  action="/games/<%=theGame._id%>" method="POST" id="form-container">
+      <div class="form-group">
+          <label style="color: white" for="Sport">Sport:</label>
+          <input type="text" class="form-control" id="sport-input" aria-describedby="emailHelp" placeholder="sport" name="sport">
+        </div>
+      <div class="form-group">
+          <label style="color: white" for="Adress">Adress:</label>
+          <input type="text" name="address" class="form-control" id="exampleInputPassword1" placeholder="address">
+        </div>
+        <div class="form-group">
+            <label style="color: white" for="Max Players">Max Players:</label>
+            <input type="text" class="form-control" id="maxplayer-input" aria-describedby="emailHelp" placeholder="max players" name="max players">
+          </div>
+        <button> Update Game </button>
+    </form>
+
+

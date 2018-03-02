@@ -18,6 +18,11 @@ body {
     background-attachment: fixed;
   }
 
+.list-group-item {
+  background: #5e5d5d;
+  color: white;
+}
+
 .index-writing {
   color: white;
   font-family: 'Play', sans-serif;;
@@ -611,7 +616,8 @@ body {
   
   #services .box {
     padding: 40px;
-    margin-bottom: 40px;
+    margin-bottom: 60px;
+    margin-top: 50px;
     box-shadow: 10px 10px 15px rgba(73, 78, 92, 0.1);
     background: #fff;
     transition: 0.4s;
