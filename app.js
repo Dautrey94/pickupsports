@@ -19,7 +19,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const User = require('./models/user');
 const bcrypt = require ('bcrypt')
 
-mongoose.connect(process.env.MONGO_URI);
+mongoose.connect("mongodb://heroku_hccs2jfr:rukh5m25p2ammig98echjdslta@ds143081.mlab.com:43081/heroku_hccs2jfr");
 
 const app = express();
 
