@@ -24,7 +24,7 @@ newGameRoutes.post('/newgame', (req,res,next) => {
     const newGame = new Games({
         sport : req.body.sport,
         address : req.body.address,
-        dateAndTime : req.body.date,
+        date : req.body.date,
         maxPlayers : req.body.maxPlayers,
         currentPlayers : req.body.currentPlayers,
         owner: req.user._id,
