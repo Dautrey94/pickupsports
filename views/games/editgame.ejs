@@ -1,32 +1,41 @@
+<!-- <link rel="stylesheet" href="/stylesheets/home.css"> -->
+<link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+      
+<!-- Libraries CSS Files -->
+<!-- <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+<link href="lib/animate/animate.min.css" rel="stylesheet">
+<link href="lib/ionicons/css/ionicons.min.css" rel="stylesheet">
+<link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+<link href="lib/magnific-popup/magnific-popup.css" rel="stylesheet">
+<link href="lib/ionicons/css/ionicons.min.css" rel="stylesheet">
 
-    <!-- <form method="post" action="/games/<%=theGame._id%>">
-      <label for="sport-input"> Sport: </label>
-      <input  id="sport-input" type="text" name="sport" value="<%=theGame.sport%>">
-      <br>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/lumen/bootstrap.min.css">
+<link rel="stylesheet" href="./stylesheets/style.css"> -->
+<link rel="stylesheet" href="../../stylesheets/borrowedstyle.css">
+    <div class="main-container edit-form">
+      
+      <form style="width: 40%; margin: 50px auto"  action="/games/<%=theGame._id%>" method="POST" id="form-container">
+        <!-- <div class="form-group"> -->
+            <label style="color: white" for="Sport">Sport:</label>
+            <input type="text" class="form-control" id="sport-input" aria-describedby="emailHelp" placeholder="sport" name="sport" value="<%=theGame.sport%>">
+          <!-- </div> -->
+        <!-- <div class="form-group"> -->
+            <label style="color: white" for="Adress">Adress:</label>
+            <input type="text" name="address" class="form-control" id="exampleInputPassword1" placeholder="address" value="<%=theGame.address%>">
+          <!-- </div> -->
+          <!-- <div class="form-group"> -->
+              <label style="color: white" for="Max Players">Max Players:</label>
+              <input type="text" class="form-control" id="maxplayer-input" aria-describedby="emailHelp" placeholder="max players" name="maxPlayers" value="<%=theGame.maxPlayers%>">
+            <!-- </div> -->
+          <button> Update Game </button>
+      </form>
+  
+
+
+
+
+
+
     
-      <label for="address-input"> Address: </label>
-      <input  id="address-input" type="text" name="address" value="<%=theGame.address%>" >
-      <br>
-      <label for="maxPlayers">Max Players</label>
-      <input type="number" name="maxPlayers" value="<%=theGame.maxPlayers%>" >
-      <br>
-      <button type="submit"> Update Game </button>
-    </form> -->
-
-    <form style="width: 40%; margin: 50px auto"  action="/games/<%=theGame._id%>" method="POST" id="form-container">
-      <div class="form-group">
-          <label style="color: white" for="Sport">Sport:</label>
-          <input type="text" class="form-control" id="sport-input" aria-describedby="emailHelp" placeholder="sport" name="sport">
-        </div>
-      <div class="form-group">
-          <label style="color: white" for="Adress">Adress:</label>
-          <input type="text" name="address" class="form-control" id="exampleInputPassword1" placeholder="address">
-        </div>
-        <div class="form-group">
-            <label style="color: white" for="Max Players">Max Players:</label>
-            <input type="text" class="form-control" id="maxplayer-input" aria-describedby="emailHelp" placeholder="max players" name="max players">
-          </div>
-        <button> Update Game </button>
-    </form>
-
 
