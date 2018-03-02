@@ -1,17 +1,54 @@
 <link rel="stylesheet" href="/stylesheets/home.css">
-<div id="leftHalf" class="home-image"></div>
-<h1>PlayBall</h1>
+
+
 <% if (user) { %>
         
-    <a href="/newgame"><button>Create Game</button></a>
 
-    <a href="/logout">click here to logout</a>
+    
+      <nav id="nav-menu-container">
+        <ul class="nav-menu">           
+          <li><a href="/newgame"><button class= "btn btn-success">Create Game</button></a></li>
+          <li><a href="/logout"><button class= "btn btn-danger">Logout</a></li>
+        </ul>
+      </nav>
+    </div>
+   
 
         <%# gameResults is defined in the get homepage route %>
         <% gameResults.forEach((oneGame) => { %>
             <%# oneGame is a placeholder %>
             <%# sport is part of schema %>
-            <p>===========================================</p>
+            
+    <section id="services">
+            <div class="container">
+              <!-- <div class="section-header">
+                <h2>Services</h2>
+                <p>Sed tamen tempor magna labore dolore dolor sint tempor duis magna elit veniam aliqua esse amet veniam enim export quid quid veniam aliqua eram noster malis nulla duis fugiat culpa esse aute nulla ipsum velit export irure minim illum fore</p>
+              </div> -->
+      
+              <div class="row">
+      
+                <div class="col-lg-4">
+                  <div class="box wow fadeInLeft">
+                    <div class="icon"><i class="fa fa-bar-chart"></i></div>
+                    
+            <p><%=oneGame.owner%> organized this event: </p>
+            Sport:<strong><%= oneGame.sport%></strong>
+            <br>
+            Address: <strong><%= oneGame.address%></strong>
+            <br>
+            Date and<strong><%= oneGame.dateAndTime%></strong>
+            <br>
+            Current Players: <strong><%= oneGame.currentPlayers%></strong>
+            <br>
+            Max Players: <strong><%= oneGame.maxPlayers%></strong>
+                  </div>
+                </div>
+              </div>
+      
+            </div>
+          </section><!-- #services -->
+            <!-- <p>===========================================</p>
             <p><%=oneGame.owner%> organized this event: </p>
             Sport:<strong><%= oneGame.sport%></strong>
             <br>
@@ -21,7 +58,7 @@
             <br>
             Current Players: <strong><%= oneGame.currentPlayers%></strong>
             <br>
-            Max Players: <strong><%= oneGame.maxPlayers%></strong>
+            Max Players: <strong><%= oneGame.maxPlayers%></strong> -->
             
 
     <% if(oneGame.owner !== undefined){ %>
@@ -37,7 +74,7 @@
                 <% if((user._id.equals(oneGame.owner))=== false){ %>
                     <% if(oneGame.maxPlayers !== oneGame.currentPlayers){ %>
                         <% if(user.inTheGame === false ) { %>
-                            <div class= "joinBtn">
+                            <div class= "joinBtn"></div>
                                 <form action="/games/<%=oneGame._id%>/add" method="post">
                                 <button type="submit"> Join Game </button>
                                 </form>

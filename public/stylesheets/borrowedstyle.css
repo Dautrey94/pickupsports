@@ -11,7 +11,18 @@ body {
     background: #fff;
     color: #444;
     font-family: "Open Sans", sans-serif;
+    background-image: url("http://s4.thingpic.com/images/Y7/Vy6xTwXX4ZvrWByiQQ35yGzx.jpeg");
+    
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
   }
+
+.index-writing {
+  color: white;
+  font-family: 'Play', sans-serif;;
+  font-size: 40px
+}
   
   a {
     color: #50d8af;
@@ -135,13 +146,13 @@ body {
   }
   
   #header #logo h1 a {
-    color: #0c2e8a;
+    color: #5e5d5d;
     line-height: 1;
     display: inline-block;
   }
   
   #header #logo h1 a span {
-    color: #50d8af;
+    color: #2c86ad;
   }
   
   #header #logo img {
@@ -220,7 +231,7 @@ body {
   
   #intro .intro-content .btn-get-started {
     background: #0c2e8a;
-    border: 2px solid #0c2e8a;
+    border: #0c2e8a;
   }
   
   #intro .intro-content .btn-get-started:hover {
@@ -230,7 +241,7 @@ body {
   
   #intro .intro-content .btn-projects {
     background: #50d8af;
-    border: 2px solid #50d8af;
+    border: #50d8af;
   }
   
   #intro .intro-content .btn-projects:hover {
@@ -626,7 +637,7 @@ body {
   }
   
   #services .box .icon i:before {
-    background: #0c2e8a;
+    background: white;
     background: linear-gradient(45deg, #50d8af 0%, #a3ebd5 100%);
     background-clip: border-box;
     -webkit-background-clip: text;
@@ -876,13 +887,13 @@ body {
     border-radius: 3px;
     transition: 0.5s;
     margin: 10px;
-    border: 3px solid #fff;
+    border: #fff;
     color: #fff;
   }
   
   #call-to-action .cta-btn:hover {
     background: #50d8af;
-    border: 3px solid #50d8af;
+    border: #50d8af;
   }
   
   /* Our Team Section

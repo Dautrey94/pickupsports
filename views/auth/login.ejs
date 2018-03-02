@@ -1,17 +1,29 @@
-<form action="/login" method = "POST">
-    <h1>Login</h1>
-    <div>
-        <label for= "username">Username:</label>
-        <input type="text" name="username">
+
+<form style="width: 50%; margin: 100px auto" action="/login" method = "POST" id="form-container">
+    <div class="form-group">
+        <label style="color: white" for="username">Username</label>
+        <input type="text" class="form-control" id="username" aria-describedby="emailHelp" placeholder="Enter Username" name="username">
+        <small id="emailHelp" class="form-text text-muted"></small>
     </div>
-    <div>
-        <label for="password">Password:</label>
-        <input type="password" name="password">
+    <br><br>
+    <div class="form-group">
+        <label style="color: white" for="exampleInputPassword">Password</label>
+        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name="password">
     </div>
+
     <% if (typeof message != "undefined") { %>
         <div class ="error-message"><%= message %></div>
     <% } %>
+    <br><br>
+
     <div>
-        <input type="submit" value="Log In">
+        <input class= btn-success type="submit" value="Log In">
     </div>
 </form>
+
+
+
+
+
+
+

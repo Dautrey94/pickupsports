@@ -71,7 +71,7 @@ authRoutes.get('/homepage', (req, res, next) => {
 
 authRoutes.get("/logout", (req, res) => {
     req.logout();
-    res.redirect('/homepage');
+    res.redirect('/');
 });
 
 module.exports = authRoutes;
