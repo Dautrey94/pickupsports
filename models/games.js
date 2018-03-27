@@ -8,6 +8,7 @@ const gameSchema = new Schema ({
     time:           Number,
     maxPlayers:     Number,
     currentPlayers: Number,
+    //referring to user obj (ref:'User')
     owner:          { type: Schema.Types.ObjectId,
                       required: true}
     });

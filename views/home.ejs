@@ -36,35 +36,17 @@
                         <li class="list-group-item">Max Players: <strong><%= oneGame.maxPlayers%></strong></li>
                       </ul>
                     
-            <!-- <p><%=oneGame.owner%> organized this event: </p>
-            Sport:<strong><%= oneGame.sport%></strong>
-            <br>
-            Address: <strong><%= oneGame.address%></strong>
-            <br>
-            Date and<strong><%= oneGame.dateAndTime%></strong>
-            <br>
-            Current Players: <strong><%= oneGame.currentPlayers%></strong>
-            <br>
-            Max Players: <strong><%= oneGame.maxPlayers%></strong> -->
+      
                   </div>
                 </div>
               </div>
       
-            <!-- </div> -->
+      
           </section>
-            <!-- <p>===========================================</p>
-            <p><%=oneGame.owner%> organized this event: </p>
-            Sport:<strong><%= oneGame.sport%></strong>
-            <br>
-            Address: <strong><%= oneGame.address%></strong>
-            <br>
-            <strong><%= oneGame.dateAndTime%></strong>
-            <br>
-            Current Players: <strong><%= oneGame.currentPlayers%></strong>
-            <br>
-            Max Players: <strong><%= oneGame.maxPlayers%></strong> -->
+           
             
     <% if(oneGame.owner !== undefined){ %>
+      <!-- if user id is equal to the id of the game owner give ability to edit and delete -->
             <% if(user._id.equals(oneGame.owner)){ %>
                 <button><a href="/games/<%=oneGame._id%>/edit">Edit Game</a></button>
                 <form action="/games/<%=oneGame._id%>/delete" method="post">
@@ -73,7 +55,7 @@
                 <br>
                 
             <% } %>
-    
+    <!-- if not the owner gives user ability ot join game -->
                 <% if((user._id.equals(oneGame.owner))=== false){ %>
                     <% if(oneGame.maxPlayers !== oneGame.currentPlayers){ %>
                       <% console.log("USER IN THE GAME ?: ", user) %>

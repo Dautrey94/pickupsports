@@ -46,12 +46,13 @@ newGameRoutes.get('/games/:id/edit', ensureLogin.ensureLoggedIn(),(req,res,next)
         if (err)        {
             return next(err)
         }
+    // details page with all pre existing data reated to this ID
         res.render("games/editgame", {
             theGame: theGame
         })
     })
 });
-
+//this gives ability to make changes and update data
 newGameRoutes.post('/games/:id', (req,res,next) => {
     console.log('we out here')
     const updates = {
@@ -59,6 +60,7 @@ newGameRoutes.post('/games/:id', (req,res,next) => {
         address : req.body.address,
         maxPlayers : req.body.maxPlayers,
     }
+    //req.parmas specifically gets ID from URL
     Games.findByIdAndUpdate(req.params.id, updates, (err) => {
         if (err)        {
             return next(err)
@@ -144,20 +146,6 @@ newGameRoutes.post('/games/:id/leave', (req, res, next) =>{
 })
 
 
-
-// newGameRoutes.post('/games/:id/',(req,res,next) => {
-//     console.log('yoo');
-//     const addPlayer = {
-//         currentPlayers: req.body.currentPlayers
-//     }
-//     Games.findByIdAndUpdate (req.params.id, addPlayer, (err) => {
-//         if (err) {
-//             return next (err)
-//         }
-//         res.redirect('/homepage');
-//     });
-// });
-
 // delete
 newGameRoutes.post('/games/:id/delete', (req, res, next) => {
     const gameId = req.params.id;
@@ -171,16 +159,6 @@ newGameRoutes.post('/games/:id/delete', (req, res, next) => {
     })
 })
 
-
-
-// attempt to disbale join button
-
-// function disableJoin() {
-//    document.getElementById("joinBtn").disabled = true;
-// }
-// if (currentPlayers === maxPlayers){
-//     return disableJoin()
-// }
 
 
 module.exports = newGameRoutes;
